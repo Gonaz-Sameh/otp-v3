@@ -20,6 +20,24 @@ async function authenticateWhatsappClient(organizationId) {
                 console.log("authenticateWhatsappClient - Creating new session...");
                 const client = new Client({
                     authStrategy: new LocalAuth({ clientId: organization._id.toString() }),
+                    puppeteer: {
+                        headless: true,
+                        args: [
+                            '--no-sandbox',
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--disable-gpu',
+                            '--disable-background-timer-throttling',
+                            '--disable-backgrounding-occluded-windows',
+                            '--disable-renderer-backgrounding',
+                            '--disable-features=TranslateUI',
+                            '--disable-ipc-flooding-protection'
+                        ],
+                        executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome-stable'
+                    }
                 });
                 whatsappClients.set(organizationId, client);
                 organization.whatsappAuth.authStrategy = 'LocalAuth';

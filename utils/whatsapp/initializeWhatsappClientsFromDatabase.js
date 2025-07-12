@@ -21,6 +21,24 @@ async function initializeWhatsappClientsFromDatabase() {
                 console.log(`initializeWhatsappClientsFromDatabase - Try Recreating client for organization: ${organization.name} (${organization._id})`);
                 const client = new Client({
                     authStrategy: new LocalAuth({ clientId: clientId }),
+                    puppeteer: {
+                        headless: true,
+                        args: [
+                            '--no-sandbox',
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage',
+                            '--disable-accelerated-2d-canvas',
+                            '--no-first-run',
+                            '--no-zygote',
+                            '--disable-gpu',
+                            '--disable-background-timer-throttling',
+                            '--disable-backgrounding-occluded-windows',
+                            '--disable-renderer-backgrounding',
+                            '--disable-features=TranslateUI',
+                            '--disable-ipc-flooding-protection'
+                        ],
+                        executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome-stable'
+                    }
                 });
                 whatsappClients.set(organization._id.toString(), client);
 
@@ -69,4 +87,5 @@ async function initializeWhatsappClientsFromDatabase() {
         console.log("Error initializing clients from database:", error);
     }
 }
-module.exports =initializeWhatsappClientsFromDatabase;
+
+module.exports = initializeWhatsappClientsFromDatabase;
