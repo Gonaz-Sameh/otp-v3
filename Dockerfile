@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     libxss1 \
     libxtst6 \
     libgbm1 \
-    libgobject-2.0-0 \
+    libglib2.0-0 \
     libgconf-2-4 \
     libgdk-pixbuf2.0-0 \
     libgtk2.0-0 \
