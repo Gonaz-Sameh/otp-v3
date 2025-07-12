@@ -42,6 +42,7 @@ async function initializeWhatsappClientsFromDatabase() {
                 });
                 whatsappClients.set(organization._id.toString(), client);
 
+                
                 let isReady = false;
                 const timeout = setTimeout(async () => {
                     if (!isReady) {
